@@ -1,0 +1,35 @@
+python_install: true
+python3_install: true
+python3_version: "3.10.11"
+python3_libs:
+  - pipdeptree
+  - black
+  - bandit
+  - requests
+  - numpy
+  - sympy
+  - scipy
+  - gmpy2
+  - pycryptodome
+python2_install: false
+python2_version: "2.7.18"
+python2_libs:
+  - numpy
+python_global_version: "3.10.11"
+nodejs_install: true
+nodejs_version: "18.16.0"
+nodejs_global_version: "18.16.0"
+nodejs_libs:
+  - npm-check-updates
+  - prettier
+  - prettier-plugin-java
+  - "@prettier/plugin-php"
+  - "@prettier/plugin-ruby"
+golang_install: true
+golang_version: "1.19.9"
+golang_global_version: "1.19.9"
+golang_libs:
+ruby_install: false
+ruby_version: "2.7.7"
+ruby_global_version: "2.7.7"
+ruby_libs:

@@ -9,7 +9,7 @@ on:
 jobs:
   vagrant-up:
     runs-on: macos-12
-    timeout-minutes: 30
+    timeout-minutes: 50
 
     steps:
       - uses: actions/checkout@v3

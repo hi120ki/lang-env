@@ -10,6 +10,7 @@
     - name: "apt install pyenv lib"
       apt:
         pkg:
+          - zsh
           - make
           - build-essential
           - libssl-dev

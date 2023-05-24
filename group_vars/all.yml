@@ -22,9 +22,6 @@ nodejs_global_version: "18.16.0"
 nodejs_libs:
   - npm-check-updates
   - prettier
-  - prettier-plugin-java
-  - "@prettier/plugin-php"
-  - "@prettier/plugin-ruby"
 golang_install: true
 golang_version: "1.19.9"
 golang_global_version: "1.19.9"

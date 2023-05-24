@@ -14,13 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-python@v3
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v3
         with:
-          python-version: "3.x"
-          architecture: "x64"
+          path: ~/.vagrant.d/boxes
+          key: |
+            ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
 
-      - name: install ansible
-        run: pip install -U ansible
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - run: pip install -r requirements.txt
 
       - name: Run vagrant up
         run: vagrant up

@@ -1,6 +1,6 @@
 python_install: true
 python3_install: true
-python3_version: "3.10.12"
+python3_version: "3.10.13"
 python3_libs:
   - pipdeptree
   - black
@@ -15,16 +15,16 @@ python2_install: false
 python2_version: "2.7.18"
 python2_libs:
   - numpy
-python_global_version: "3.10.12"
+python_global_version: "3.10.13"
 nodejs_install: true
-nodejs_version: "18.16.1"
-nodejs_global_version: "18.16.1"
+nodejs_version: "18.17.1"
+nodejs_global_version: "18.17.1"
 nodejs_libs:
   - npm-check-updates
   - prettier
 golang_install: true
-golang_version: "1.20.6"
-golang_global_version: "1.20.6"
+golang_version: "1.20.7"
+golang_global_version: "1.20.7"
 golang_libs:
 ruby_install: true
 ruby_version: "3.0.6"

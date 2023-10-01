@@ -17,14 +17,14 @@ python2_libs:
   - numpy
 python_global_version: "3.10.13"
 nodejs_install: true
-nodejs_version: "18.17.1"
-nodejs_global_version: "18.17.1"
+nodejs_version: "18.18.0"
+nodejs_global_version: "18.18.0"
 nodejs_libs:
   - npm-check-updates
   - prettier
 golang_install: true
-golang_version: "1.20.7"
-golang_global_version: "1.20.7"
+golang_version: "1.20.8"
+golang_global_version: "1.20.8"
 golang_libs:
 ruby_install: true
 ruby_version: "3.0.6"

@@ -2,7 +2,7 @@
   stat:
     path: ~/.anyenv
   register: check_anyenv
-  become: no
+  become: false
 - block:
     - name: apt update
       apt:
@@ -30,12 +30,12 @@
           - liblzma-dev
     - name: git clone anyenv
       shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
-      become: no
+      become: false
   when:
     - not check_anyenv.stat.exists
 
 - name: add PATH ~/.zshrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.zshrc
     create: true
@@ -44,7 +44,7 @@
       export PATH="$HOME/.anyenv/bin:$PATH"
       eval "$(anyenv init - zsh)"
 - name: add PATH ~/.config/fish/config.fish
-  become: no
+  become: false
   blockinfile:
     dest: ~/.config/fish/config.fish
     create: true
@@ -53,7 +53,7 @@
       set -x PATH ~/.anyenv/bin $PATH
       anyenv init - | source
 - name: add PATH ~/.bashrc
-  become: no
+  become: false
   blockinfile:
     dest: ~/.bashrc
     create: true
@@ -66,11 +66,11 @@
   stat:
     path: ~/.config/anyenv
   register: check_anyenv_install
-  become: no
+  become: false
 - block:
     - name: anyenv install --init
       shell: ~/.anyenv/bin/anyenv install --force-init
-      become: no
+      become: false
   when:
     - not check_anyenv_install.stat.exists
 
@@ -78,30 +78,30 @@
   stat:
     path: ~/.anyenv/plugins/anyenv-update
   register: check_anyenv_update
-  become: no
+  become: false
 - block:
     - name: mkdir -p ~/.anyenv/plugins
       shell: mkdir -p ~/.anyenv/plugins
-      become: no
+      become: false
     - name: git clone anyenv-update
       shell: git clone https://github.com/znz/anyenv-update.git ~/.anyenv/plugins/anyenv-update
-      become: no
+      become: false
   when:
     - not check_anyenv_update.stat.exists
 - name: anyenv update
   shell: ~/.anyenv/bin/anyenv update
-  become: no
+  become: false
 
 - block:
     - name: check pyenv installed
       stat:
         path: ~/.anyenv/envs/pyenv
       register: check_pyenv
-      become: no
+      become: false
     - block:
         - name: anyenv install pyenv
           shell: ~/.anyenv/bin/anyenv install pyenv
-          become: no
+          become: false
       when:
         - not check_pyenv.stat.exists
     - block:
@@ -109,21 +109,21 @@
           stat:
             path: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}
           register: check_python3
-          become: no
+          become: false
         - block:
             - name: install python3
               shell: source ~/.zshrc ; pyenv install {{ python3_version }}
-              become: no
+              become: false
               args:
                 executable: /usr/bin/zsh
           when:
             - not check_python3.stat.exists
         - name: pip install
           shell: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}/bin/python -m pip install -U pip
-          become: no
+          become: false
         - name: pip install libs
           shell: ~/.anyenv/envs/pyenv/versions/{{ python3_version }}/bin/python -m pip install -U {{ item }}
-          become: no
+          become: false
           ignore_errors: True
           with_items:
             - "{{ python3_libs }}"
@@ -134,21 +134,21 @@
           stat:
             path: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}
           register: check_python2
-          become: no
+          become: false
         - block:
             - name: install python2
               shell: source ~/.zshrc ; pyenv install {{ python2_version }}
-              become: no
+              become: false
               args:
                 executable: /usr/bin/zsh
           when:
             - not check_python2.stat.exists
         - name: pip install
           shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U pip
-          become: no
+          become: false
         - name: pip install libs
           shell: ~/.anyenv/envs/pyenv/versions/{{ python2_version }}/bin/python -m pip install -U {{ item }}
-          become: no
+          become: false
           ignore_errors: True
           with_items:
             - "{{ python2_libs }}"
@@ -156,11 +156,11 @@
         - python2_install
     - name: pyenv global
       shell: source ~/.zshrc ; pyenv global {{ python_global_version }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
     - name: edit ~/.bashrc
-      become: no
+      become: false
       blockinfile:
         dest: ~/.bashrc
         create: true
@@ -172,7 +172,7 @@
           alias venvinit='rm -rf .venv ; python -m venv .venv'
           alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
     - name: edit ~/.zshrc
-      become: no
+      become: false
       blockinfile:
         dest: ~/.zshrc
         create: true
@@ -184,7 +184,7 @@
           alias venvinit='rm -rf .venv ; python -m venv .venv'
           alias venvsetup='venvinit ; venv ; pip install -U pip ; pipreq'
     - name: edit ~/.config/fish/config.fish
-      become: no
+      become: false
       blockinfile:
         dest: ~/.config/fish/config.fish
         create: true
@@ -203,34 +203,34 @@
       stat:
         path: ~/.anyenv/envs/nodenv
       register: check_nodenv
-      become: no
+      become: false
     - block:
         - name: anyenv install nodenv
           shell: ~/.anyenv/bin/anyenv install nodenv
-          become: no
+          become: false
       when:
         - not check_nodenv.stat.exists
     - name: check nodejs installed
       stat:
         path: ~/.anyenv/envs/nodenv/versions/{{ nodejs_version }}
       register: check_nodejs
-      become: no
+      become: false
     - block:
         - name: install nodejs
           shell: source ~/.zshrc ; nodenv install {{ nodejs_version }}
-          become: no
+          become: false
           args:
             executable: /usr/bin/zsh
       when:
         - not check_nodejs.stat.exists
     - name: npm install
       shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g npm yarn
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
     - name: npm install libs
       shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g {{ item }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
       ignore_errors: True
@@ -238,11 +238,11 @@
         - "{{ nodejs_libs }}"
     - name: nodenv global
       shell: source ~/.zshrc ; nodenv global {{ nodejs_global_version }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
     - name: edit ~/.bashrc
-      become: no
+      become: false
       blockinfile:
         dest: ~/.bashrc
         create: true
@@ -250,7 +250,7 @@
         content: |
           alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
     - name: edit ~/.zshrc
-      become: no
+      become: false
       blockinfile:
         dest: ~/.zshrc
         create: true
@@ -258,7 +258,7 @@
         content: |
           alias nup='npm i -g npm yarn ; npm update -g ; yarn global upgrade ; npm cache verify ; yarn cache clean'
     - name: edit ~/.config/fish/config.fish
-      become: no
+      become: false
       blockinfile:
         dest: ~/.config/fish/config.fish
         create: true
@@ -273,29 +273,29 @@
       stat:
         path: ~/.anyenv/envs/goenv
       register: check_goenv
-      become: no
+      become: false
     - block:
         - name: anyenv install goenv
           shell: ~/.anyenv/bin/anyenv install goenv
-          become: no
+          become: false
       when:
         - not check_goenv.stat.exists
     - name: check go installed
       stat:
         path: ~/.anyenv/envs/goenv/versions/{{ golang_version }}
       register: check_go
-      become: no
+      become: false
     - block:
         - name: install go
           shell: source ~/.zshrc ; goenv install {{ golang_version }}
-          become: no
+          become: false
           args:
             executable: /usr/bin/zsh
       when:
         - not check_go.stat.exists
     - name: go install libs
       shell: source ~/.zshrc ; goenv shell {{ golang_version }} ; go install {{ item }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
       ignore_errors: True
@@ -303,7 +303,7 @@
         - "{{ golang_libs }}"
     - name: goenv global
       shell: source ~/.zshrc ; goenv global {{ golang_global_version }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
   when:
@@ -314,34 +314,34 @@
       stat:
         path: ~/.anyenv/envs/rbenv
       register: check_rbenv
-      become: no
+      become: false
     - block:
         - name: anyenv install rbenv
           shell: ~/.anyenv/bin/anyenv install rbenv
-          become: no
+          become: false
       when:
         - not check_rbenv.stat.exists
     - name: check ruby installed
       stat:
         path: ~/.anyenv/envs/rbenv/versions/{{ ruby_version }}
       register: check_ruby
-      become: no
+      become: false
     - block:
         - name: install ruby
           shell: source ~/.zshrc ; rbenv install {{ ruby_version }}
-          become: no
+          become: false
           args:
             executable: /usr/bin/zsh
       when:
         - not check_ruby.stat.exists
     - name: gem update
       shell: source ~/.zshrc ; rbenv shell {{ ruby_version }} ; gem update --system
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
     - name: gem install libs
       shell: source ~/.zshrc ; rbenv shell {{ ruby_version }} ; gem install {{ item }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
       ignore_errors: True
@@ -349,7 +349,7 @@
         - "{{ ruby_libs }}"
     - name: rbenv global
       shell: source ~/.zshrc ; rbenv global {{ ruby_global_version }}
-      become: no
+      become: false
       args:
         executable: /usr/bin/zsh
   when:

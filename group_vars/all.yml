@@ -23,8 +23,8 @@ nodejs_libs:
   - npm-check-updates
   - prettier
 golang_install: true
-golang_version: "1.20.8"
-golang_global_version: "1.20.8"
+golang_version: "1.20.10"
+golang_global_version: "1.20.10"
 golang_libs:
 ruby_install: true
 ruby_version: "3.0.6"

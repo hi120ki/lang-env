@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu/focal64"
-  config.vm.box_version = "20230523.0.0"
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.box_version = "20231027.0.0"
 
   config.vm.define "ubuntu"
 

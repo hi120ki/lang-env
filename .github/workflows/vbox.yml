@@ -1,4 +1,4 @@
-name: vagrant-up
+name: vbox
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  vagrant-up:
+  vbox:
     runs-on: macos-12
     timeout-minutes: 50
 

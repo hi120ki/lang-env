@@ -21,5 +21,8 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
       - name: Run ansible
         run: ansible-playbook -c=local -i local, base.yml

@@ -8,7 +8,7 @@
         - name: apt update
           apt:
             update_cache: yes
-        - name: "apt install pyenv lib"
+        - name: apt install pyenv lib
           apt:
             pkg:
               - zsh
@@ -30,6 +30,11 @@
               - libffi-dev
               - liblzma-dev
       when: "'Ubuntu' in ansible_facts['distribution']"
+    - block:
+        - name: brew install tools
+          shell: brew install zsh
+          become: false
+      when: "'Darwin' in ansible_facts['system']"
     - name: git clone anyenv
       shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
       become: false

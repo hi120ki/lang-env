@@ -124,10 +124,8 @@
           become: false
         - block:
             - name: install python3
-              shell: source ~/.zshrc ; pyenv install {{ python3_version }}
+              shell: bash -lc "pyenv install {{ python3_version }}"
               become: false
-              args:
-                executable: /usr/bin/zsh
           when:
             - not check_python3.stat.exists
         - name: pip install
@@ -149,10 +147,8 @@
           become: false
         - block:
             - name: install python2
-              shell: source ~/.zshrc ; pyenv install {{ python2_version }}
+              shell: bash -lc "pyenv install {{ python2_version }}"
               become: false
-              args:
-                executable: /usr/bin/zsh
           when:
             - not check_python2.stat.exists
         - name: pip install
@@ -167,10 +163,8 @@
       when:
         - python2_install
     - name: pyenv global
-      shell: source ~/.zshrc ; pyenv global {{ python_global_version }}
+      shell: bash -lc "pyenv global {{ python_global_version }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
     - name: edit ~/.bashrc
       become: false
       blockinfile:
@@ -229,30 +223,22 @@
       become: false
     - block:
         - name: install nodejs
-          shell: source ~/.zshrc ; nodenv install {{ nodejs_version }}
+          shell: bash -lc "nodenv install {{ nodejs_version }}"
           become: false
-          args:
-            executable: /usr/bin/zsh
       when:
         - not check_nodejs.stat.exists
     - name: npm install
-      shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g npm yarn
+      shell: bash -lc "nodenv shell {{ nodejs_version }} ; npm i -g npm yarn"
       become: false
-      args:
-        executable: /usr/bin/zsh
     - name: npm install libs
-      shell: source ~/.zshrc ; nodenv shell {{ nodejs_version }} ; npm i -g {{ item }}
+      shell: bash -lc "nodenv shell {{ nodejs_version }} ; npm i -g {{ item }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
       ignore_errors: True
       with_items:
         - "{{ nodejs_libs }}"
     - name: nodenv global
-      shell: source ~/.zshrc ; nodenv global {{ nodejs_global_version }}
+      shell: bash -lc "nodenv global {{ nodejs_global_version }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
     - name: edit ~/.bashrc
       become: false
       blockinfile:
@@ -299,25 +285,19 @@
       become: false
     - block:
         - name: install go
-          shell: source ~/.zshrc ; goenv install {{ golang_version }}
+          shell: bash -lc "goenv install {{ golang_version }}"
           become: false
-          args:
-            executable: /usr/bin/zsh
       when:
         - not check_go.stat.exists
     - name: go install libs
-      shell: source ~/.zshrc ; goenv shell {{ golang_version }} ; go install {{ item }}
+      shell: bash -lc "goenv shell {{ golang_version }} ; go install {{ item }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
       ignore_errors: True
       with_items:
         - "{{ golang_libs }}"
     - name: goenv global
-      shell: source ~/.zshrc ; goenv global {{ golang_global_version }}
+      shell: bash -lc "goenv global {{ golang_global_version }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
   when:
     - golang_install
 
@@ -340,29 +320,21 @@
       become: false
     - block:
         - name: install ruby
-          shell: source ~/.zshrc ; rbenv install {{ ruby_version }}
+          shell: bash -lc "rbenv install {{ ruby_version }}"
           become: false
-          args:
-            executable: /usr/bin/zsh
       when:
         - not check_ruby.stat.exists
     - name: gem update
-      shell: source ~/.zshrc ; rbenv shell {{ ruby_version }} ; gem update --system
+      shell: bash -lc "rbenv shell {{ ruby_version }} ; gem update --system"
       become: false
-      args:
-        executable: /usr/bin/zsh
     - name: gem install libs
-      shell: source ~/.zshrc ; rbenv shell {{ ruby_version }} ; gem install {{ item }}
+      shell: bash -lc "rbenv shell {{ ruby_version }} ; gem install {{ item }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
       ignore_errors: True
       with_items:
         - "{{ ruby_libs }}"
     - name: rbenv global
-      shell: source ~/.zshrc ; rbenv global {{ ruby_global_version }}
+      shell: bash -lc "rbenv global {{ ruby_global_version }}"
       become: false
-      args:
-        executable: /usr/bin/zsh
   when:
     - ruby_install

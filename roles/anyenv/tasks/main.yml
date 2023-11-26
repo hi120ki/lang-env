@@ -29,10 +29,10 @@
               - libxmlsec1-dev
               - libffi-dev
               - liblzma-dev
-        - name: git clone anyenv
-          shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
-          become: false
       when: "'Ubuntu' in ansible_facts['distribution']"
+    - name: git clone anyenv
+      shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
+      become: false
   when:
     - not check_anyenv.stat.exists
 

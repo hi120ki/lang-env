@@ -34,11 +34,6 @@
         - name: brew install tools
           shell: brew install zsh
           become: false
-        - name: add symlink
-          shell: ln -s /opt/homebrew/bin/zsh /usr/bin/zsh
-        - name: brew install pyenv lib
-          shell: brew install autoconf openssl@3 pkg-config readline
-          become: false
       when: "'Darwin' in ansible_facts['system']"
     - name: git clone anyenv
       shell: git clone https://github.com/anyenv/anyenv ~/.anyenv

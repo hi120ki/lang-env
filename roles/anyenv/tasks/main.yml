@@ -4,33 +4,35 @@
   register: check_anyenv
   become: false
 - block:
-    - name: apt update
-      apt:
-        update_cache: yes
-    - name: "apt install pyenv lib"
-      apt:
-        pkg:
-          - zsh
-          - make
-          - build-essential
-          - libssl-dev
-          - zlib1g-dev
-          - libbz2-dev
-          - libreadline-dev
-          - libsqlite3-dev
-          - wget
-          - curl
-          - llvm
-          - libncursesw5-dev
-          - xz-utils
-          - tk-dev
-          - libxml2-dev
-          - libxmlsec1-dev
-          - libffi-dev
-          - liblzma-dev
-    - name: git clone anyenv
-      shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
-      become: false
+    - block:
+        - name: apt update
+          apt:
+            update_cache: yes
+        - name: "apt install pyenv lib"
+          apt:
+            pkg:
+              - zsh
+              - make
+              - build-essential
+              - libssl-dev
+              - zlib1g-dev
+              - libbz2-dev
+              - libreadline-dev
+              - libsqlite3-dev
+              - wget
+              - curl
+              - llvm
+              - libncursesw5-dev
+              - xz-utils
+              - tk-dev
+              - libxml2-dev
+              - libxmlsec1-dev
+              - libffi-dev
+              - liblzma-dev
+        - name: git clone anyenv
+          shell: git clone https://github.com/anyenv/anyenv ~/.anyenv
+          become: false
+      when: "'Ubuntu' in ansible_facts['distribution']"
   when:
     - not check_anyenv.stat.exists
 

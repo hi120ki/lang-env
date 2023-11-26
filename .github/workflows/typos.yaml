@@ -1,0 +1,16 @@
+name: typos
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  typos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: check spelling
+        uses: crate-ci/typos@master

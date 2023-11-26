@@ -2,7 +2,7 @@
 
 An ansible template for language environment by anyenv
 
-## Addional tools
+## Additional tools
 
 - Devbox
 
